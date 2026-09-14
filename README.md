@@ -26,7 +26,8 @@ src/com/openaircafeteria/
 web/
 ├── index.html                      # Page shell
 ├── styles.css                     # Styling and responsive layout
-└── app.js                          # React menu, cart, and confirmation
+├── app.js                          # React menu, cart, and confirmation
+└── vendor/                         # Local React and Babel browser files
 ```
 
 ## Run the web prototype
@@ -39,7 +40,7 @@ python3 -m http.server 5500 --directory web
 
 Then visit <http://localhost:5500>.
 
-React is loaded from the CDN links in `web/index.html`, so an internet connection is needed the first time the page loads.
+React, ReactDOM, and the small JSX transformer are stored locally in `web/vendor/`, so the preview no longer depends on an external CDN.
 
 ## Run the Java OOP demo
 
