@@ -12,7 +12,7 @@ public class CanteenApp {
         MenuItem dosa = new MenuItem("Masala Dosa", 55, "Meals", "🥞");
         MenuItem coffee = new MenuItem("Cold Coffee", 45, "Drinks", "🥤");
 
-        Order order = new Order("Aditi", "12:30 PM - 12:45 PM");
+        Order order = new Order("Aditi", "12:30 PM - 12:35 PM");
         order.addItem(dosa, 1);
         order.addItem(coffee, 1);
 

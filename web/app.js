@@ -12,10 +12,12 @@ const MENU = [
 ];
 
 const PICKUP_SLOTS = [
-    '12:30 PM - 12:45 PM',
-    '12:45 PM - 1:00 PM',
-    '1:00 PM - 1:15 PM',
-    '1:15 PM - 1:30 PM'
+    '12:30 PM - 12:35 PM',
+    '12:35 PM - 12:40 PM',
+    '12:40 PM - 12:45 PM',
+    '12:45 PM - 12:50 PM',
+    '12:50 PM - 12:55 PM',
+    '12:55 PM - 1:00 PM'
 ];
 
 function money(amount) {
