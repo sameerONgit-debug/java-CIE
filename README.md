@@ -1,85 +1,62 @@
 # Open Air Cafeteria
 
-A small college canteen pre-ordering prototype for **Open Air Cafeteria**. Students can select food, choose a pickup slot, and show an order number at the counter instead of waiting in a long queue.
+A simple prototype for a college canteen pre-order system. Students choose food, select a pickup time, and get an order number before going to the counter.
 
-## What this prototype uses
+## Prototype features
 
-- **Basic Java OOP** for menu items, orders, order lines, and the small service layer
-- **HTML and CSS** for the page structure and responsive design
-- **React 18 + JavaScript** for the interactive menu and cart
-- The JDK's built-in `HttpServer` only — no Spring, database, npm, or other framework
+- Menu cards for meals, quick bites, drinks, and desserts
+- Category buttons
+- Add items to a cart and change quantity
+- Student name and pickup slot
+- Order confirmation with order number and pickup code
+- Data is saved in the browser with `localStorage`
+- Responsive layout for mobile and desktop
 
-The Java service stores orders in memory. That is intentional: it keeps the project small and easy to explain for an internal exam. Restarting the server clears the orders.
+There is deliberately no database, login, payment gateway, or large framework. This keeps the project suitable for a basic internal-exam prototype.
 
-## What works
-
-- Browse and search today's menu
-- Filter by meals, quick bites, drinks, or desserts
-- Add items to a cart and change quantities
-- Enter name, college email, and pickup time
-- Place an order and receive an order number plus pickup code
-- Responsive design for a laptop or phone
-- Demo mode: the React page still works with sample data if the Java server is not running
-
-## Folder structure
+## Project structure
 
 ```text
 src/com/openaircafeteria/
-├── CanteenServer.java              # Small JDK server and API routes
-├── model/
-│   ├── MenuItem.java               # Menu item class
-│   ├── OrderLine.java              # Item + quantity class
-│   └── Order.java                  # Order class and total calculation
-└── service/
-    ├── CanteenService.java         # Menu, validation, and in-memory orders
-    └── JsonUtil.java               # Tiny JSON helper; no external library
+├── CanteenApp.java                 # Small Java OOP demonstration
+└── model/
+    ├── MenuItem.java               # Food item class
+    ├── OrderLine.java              # Item + quantity class
+    └── Order.java                  # Order and total calculation
 web/
-├── index.html
-├── styles.css
-└── app.js                          # React UI
+├── index.html                      # Page shell
+├── styles.css                     # Styling and responsive layout
+└── app.js                          # React menu, cart, and confirmation
 ```
 
-## Run it
+## Run the web prototype
 
-Java 11 or newer is recommended. From the project root:
+The frontend does not need a build tool. From the project root, either open `web/index.html` in a browser or run a small local static server:
+
+```bash
+python3 -m http.server 5500 --directory web
+```
+
+Then visit <http://localhost:5500>.
+
+React is loaded from the CDN links in `web/index.html`, so an internet connection is needed the first time the page loads.
+
+## Run the Java OOP demo
+
+Java 8 or newer is enough:
 
 ```bash
 mkdir -p out
-javac --add-modules jdk.httpserver -d out $(find src -name '*.java')
-java --add-modules jdk.httpserver -cp out com.openaircafeteria.CanteenServer
+javac -d out $(find src -name '*.java')
+java -cp out com.openaircafeteria.CanteenApp
 ```
 
-Now open **http://localhost:8080**.
+The console demo creates a `MenuItem`, adds items to an `Order`, and prints the calculated total.
 
-To use another port:
+## OOP points for the viva
 
-```bash
-java --add-modules jdk.httpserver -cp out com.openaircafeteria.CanteenServer 9090
-```
-
-On Windows PowerShell:
-
-```powershell
-New-Item -ItemType Directory -Force out
-javac --add-modules jdk.httpserver -d out (Get-ChildItem -Recurse src -Filter *.java).FullName
-java --add-modules jdk.httpserver -cp out com.openaircafeteria.CanteenServer
-```
-
-React is loaded from a CDN in `web/index.html`, so the browser needs internet access for the React scripts. If the Java server is unavailable, the page uses demo menu data and keeps the prototype order in browser memory/local storage.
-
-## API routes
-
-| Method | Route | Purpose |
-| --- | --- | --- |
-| `GET` | `/api/menu` | Returns the menu and pickup slots |
-| `GET` | `/api/orders` | Returns orders currently held in memory |
-| `POST` | `/api/orders` | Validates and creates one order |
-
-## Simple OOP explanation for the viva
-
-- `MenuItem` represents one food item with properties such as name, price, and category.
-- `OrderLine` represents one menu item and its quantity.
-- `Order` owns its order lines and calculates the subtotal and total.
-- `CanteenService` keeps business logic such as validating the form and finding menu items.
-- `CanteenServer` only handles HTTP requests and passes the data to `CanteenService`.
+- `MenuItem` stores the name, price, category, and emoji of food.
+- `OrderLine` connects one item with a quantity.
+- `Order` stores multiple order lines and calculates the total.
 - Private fields, constructors, getters, and methods demonstrate encapsulation.
+- `CanteenApp` creates and uses the objects.
